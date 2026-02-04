@@ -16,6 +16,7 @@ Handling "Actions" (e.g., Login, Saving Data, Deleting items) in Riverpod can be
 *   **🛡️ Standardized Result Types**: Explicitly distinguish between `Idle`, `Success`, and `Failure` using `ActionResult`.
 *   **⚡ Automatic Error Handling**: Define a global error handler (e.g., Toast/Snackbar) **once**, and it applies to all actions automatically.
 *   **🪝 Simple Hooks**: `useActionListener` reduces boilerplate. Just define what happens on `success`.
+*   **🔄 Automatic Lifecycle Management**: `ActionNotifier` automatically handles `keepAlive` during async operations, preventing "Ref disposed" crashes even if the user leaves the screen.
 *   **🧩 Decoupled UI**: Your business logic remains pure Dart, independent of `BuildContext`.
 
 ---
@@ -56,7 +57,7 @@ Use `ActionResult<T>` when your action needs to return data (e.g., a User object
 #### 1. Define Notifier
 ```dart
 // State type is ActionResult<String> (returns a token)
-class LoginNotifier extends AsyncNotifier<ActionResult<String>> {
+class LoginNotifier extends ActionNotifier<ActionResult<String>> {
   @override
   ActionResult<String> build() => const ActionResult.idle();
 
@@ -117,7 +118,7 @@ Use `ActionVoidResult` when you only care if it succeeded or failed, without any
 
 #### 1. Define Notifier
 ```dart
-class DeleteAccountNotifier extends AsyncNotifier<ActionVoidResult> {
+class DeleteAccountNotifier extends ActionNotifier<ActionVoidResult> {
   @override
   ActionVoidResult build() => const ActionVoidResult.idle();
 
@@ -159,7 +160,7 @@ enum AuthAction { resendEmail, verifyCode }
 
 #### 2. Define Notifier
 ```dart
-class AuthNotifier extends AsyncNotifier<MultiActionResult<AuthAction, void>> {
+class AuthNotifier extends ActionNotifier<MultiActionResult<AuthAction, void>> {
   @override
   build() => const MultiActionResult.idle();
 
@@ -198,7 +199,9 @@ useMultiActionListener(
 
 1.  **Separate Read & Write**:
     *   Use `FutureProvider` / `StreamProvider` for **Reading** data (UI state).
-    *   Use `AsyncNotifier<ActionResult>` for **Writing** data (User actions).
+    *   Use `ActionNotifier<ActionResult>` for **Writing** data (User actions).
     *   Don't try to mix them.
-2.  **AutoDispose**:
-    *   Action providers should usually be `.autoDispose`. You typically don't want the "Success" state to persist if the user leaves the screen and comes back (unless you reset it manually).
+2.  **Use `ActionNotifier` Base Class**:
+    *   Always extend `ActionNotifier` instead of `AsyncNotifier` for action-based providers. It ensures that the provider stays alive until the asynchronous work is finished, even if the UI component that triggered it is unmounted.
+3.  **AutoDispose**:
+    *   Action providers should usually be `.autoDispose`. `ActionNotifier` handles this safely by automatically managing a `KeepAliveLink` while `state.isLoading` is true.

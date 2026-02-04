@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
 }
 
 // 2. Define Action Notifier
-class LoginNotifier extends AsyncNotifier<ActionResult<String>> {
+class LoginNotifier extends ActionNotifier<ActionResult<String>> {
   @override
   ActionResult<String> build() => const ActionResult.idle();
 
