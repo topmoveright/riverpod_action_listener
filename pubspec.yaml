@@ -1,15 +1,15 @@
 name: riverpod_action_listener
 description: "A Riverpod extension package that provides a standardized pattern for handling one-off actions (like API calls) and their UI side effects."
 version: 0.0.1
-homepage: https://topmoveright.github.io/riverpod_action_listener
-repository: https://topmoveright.github.io/riverpod_action_listener
-issue_tracker: https://topmoveright.github.io/riverpod_action_listener/issues
+homepage: https://github.com/topmoveright/riverpod_action_listener
+repository: https://github.com/topmoveright/riverpod_action_listener
+issue_tracker: https://github.com/topmoveright/riverpod_action_listener/issues
 
 topics:
   - riverpod
-  - state_management
+  - state-management
   - hooks
-  - side_effects
+  - side-effects
   - pattern
 
 platforms:
