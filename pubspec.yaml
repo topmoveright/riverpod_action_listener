@@ -1,6 +1,6 @@
 name: riverpod_action_listener
 description: "A Riverpod extension package that provides a standardized pattern for handling one-off actions (like API calls) and their UI side effects."
-version: 0.0.3
+version: 0.0.4
 homepage: https://github.com/topmoveright/riverpod_action_listener
 repository: https://github.com/topmoveright/riverpod_action_listener
 issue_tracker: https://github.com/topmoveright/riverpod_action_listener/issues
@@ -28,8 +28,8 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_hooks: ">=0.18.0 <2.0.0"
-  hooks_riverpod: ">=2.6.0 <4.0.0"
-  riverpod: ">=2.6.0 <4.0.0"
+  hooks_riverpod: ">=3.0.0 <4.0.0"
+  riverpod: ">=3.0.0 <4.0.0"
 
 dev_dependencies:
   flutter_test:
